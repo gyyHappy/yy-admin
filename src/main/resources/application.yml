@@ -1,0 +1,7 @@
+#
+server:
+  port: 8080
+
+#swagger2 ¿ª¹ØÅäÖÃ
+swagger2:
+  enable: true
