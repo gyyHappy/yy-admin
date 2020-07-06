@@ -27,7 +27,7 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${swagger2.enable}")
+    @Value("${swagger.enable}")
     private boolean enable;
 
     @Bean
@@ -35,7 +35,7 @@ public class SwaggerConfig {
         List<Parameter> parameterList = new ArrayList<>();
 
         ParameterBuilder tokenPar = new ParameterBuilder();
-        tokenPar.name("token")
+        tokenPar.name("sessionId")
                 .description("swagger测试用（模拟token传入）非必填 header")
                 .modelRef(new ModelRef("String"))
                 .parameterType("header")
@@ -45,7 +45,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())//创建该Api的基本信息（这些基本信息会展现在文档页面中)
                 .select()//函数返回一个ApiSelectorBuilder实例用来控制哪些接口暴露给Swagger ui来展现
-                .apis(RequestHandlerSelectors.basePackage("com.gyy.controller"))//指定需要扫描的包路径
+                .apis(RequestHandlerSelectors.basePackage("com.gyy.modules.sys"))//指定需要扫描的包路径
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(parameterList)
