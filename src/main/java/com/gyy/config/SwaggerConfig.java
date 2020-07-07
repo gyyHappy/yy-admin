@@ -34,13 +34,20 @@ public class SwaggerConfig {
     public Docket createDocket(){
         List<Parameter> parameterList = new ArrayList<>();
 
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        tokenPar.name("sessionId")
-                .description("swagger测试用（模拟token传入）非必填 header")
+        ParameterBuilder accessTokenBuilder = new ParameterBuilder();
+        ParameterBuilder refreshToken = new ParameterBuilder();
+
+        accessTokenBuilder.name("accessToken")
+                .description("AccessToken入口")
                 .modelRef(new ModelRef("String"))
                 .parameterType("header")
                 .required(false);
-        parameterList.add(tokenPar.build());
+        refreshToken.name("refreshToken")
+                .description("RefreshToken入口")
+                .modelRef(new ModelRef("String"))
+                .parameterType("header")
+                .required(false);
+        parameterList.add(accessTokenBuilder.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())//创建该Api的基本信息（这些基本信息会展现在文档页面中)

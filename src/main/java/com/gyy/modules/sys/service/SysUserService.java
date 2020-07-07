@@ -2,6 +2,7 @@ package com.gyy.modules.sys.service;
 
 import com.gyy.modules.sys.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gyy.modules.sys.form.SysLoginForm;
 
 /**
  * <p>
@@ -13,4 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    /**
+     * 通过用户名查找用户
+     */
+    SysUser queryByUsername(String username);
 }

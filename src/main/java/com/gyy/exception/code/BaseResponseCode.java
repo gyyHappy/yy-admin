@@ -6,7 +6,8 @@ package com.gyy.exception.code;
  * @version 1.0
  * @date 2020/7/4 21:30
  */
-public enum BaseResponseCode implements ResponseCodeInterface{
+public enum
+BaseResponseCode implements ResponseCodeInterface{
     /**
      * 这个要和前段约定好
      *code=0：服务器已成功处理了请求。 通常，这表示服务器提供了请求的网页。

@@ -8,9 +8,7 @@ import com.gyy.exception.code.ResponseCodeInterface;
  * @version 1.0
  * @date 2020/4/24 21:55
  */
-public class
-
-BusinessException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     /**
      * 提示编码

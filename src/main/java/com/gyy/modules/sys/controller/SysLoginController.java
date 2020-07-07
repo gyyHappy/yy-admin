@@ -1,8 +1,12 @@
 package com.gyy.modules.sys.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.gyy.exception.BusinessException;
+import com.gyy.modules.sys.entity.SysUser;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.service.SysUserService;
+import com.gyy.utils.PasswordUtils;
+import com.gyy.utils.R;
 import com.gyy.utils.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,11 +43,15 @@ public class SysLoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录接口")
-    public Map<String,Object> login(@RequestBody SysLoginForm form){
-        Map<String,Object> result=new HashMap<>();
-        result.put("code",0);
-        result.put("data",sysUserService.queryByUsername(form));
-        return result;
+    public R login(@RequestBody SysLoginForm form){
+        //校验验证码
+        //获取用户，匹配密码
+        SysUser sysUser = sysUserService.queryByUsername(form.getUsername());
+        if (null == sysUser || PasswordUtils.matches(sysUser.getSalt(),form.getPassword(),sysUser.getPassword())){
+            throw new BusinessException(4000002,"用户名或密码错误");
+        }
+        String token = UUID.randomUUID().toString();
+        return R.ok(token);
     }
 
     @GetMapping("/captcha.jpg")
