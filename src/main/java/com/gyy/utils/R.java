@@ -91,4 +91,8 @@ public class R<T> implements Serializable {
     public static <T> R getR(BaseResponseCode baseResponseCode) {
         return new <T>R(baseResponseCode);
     }
+
+    public static <T> R getR(int code, String msg) {
+        return new <T>R(code, msg);
+    }
 }
