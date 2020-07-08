@@ -3,6 +3,7 @@ package com.gyy.modules.sys.service;
 import com.gyy.modules.sys.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gyy.modules.sys.form.SysLoginForm;
+import com.gyy.modules.sys.vo.LoginRespVO;
 
 /**
  * <p>
@@ -15,7 +16,12 @@ import com.gyy.modules.sys.form.SysLoginForm;
 public interface SysUserService extends IService<SysUser> {
 
     /**
-     * 通过用户名查找用户
+     * 登录，并生成token
      */
-    SysUser queryByUsername(String username);
+    LoginRespVO login(SysLoginForm form);
+
+    /**
+     * 获取用户详情接口
+     */
+    SysUser queryById(String id);
 }

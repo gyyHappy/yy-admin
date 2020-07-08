@@ -8,8 +8,6 @@ package com.gyy.constants;
  */
 public class Constant {
 
-    public static  final String SESSION_ID="sessionId";
-
     /**
      * 用户名称 key
      */
@@ -32,10 +30,14 @@ public class Constant {
     public static final String JWT_REFRESH_TOKEN_BLACKLIST="jwt-refresh-token-blacklist_";
 
     /**
+     * access_token 主动退出后加入黑名单 key
+     */
+    public static final String JWT_ACCESS_TOKEN_BLACKLIST="jwt-access-token-blacklist_";
+
+    /**
      * 正常token
      */
     public static final String ACCESS_TOKEN="authorization";
-
     /**
      * 刷新token
      */
@@ -55,9 +57,18 @@ public class Constant {
      * 主动去刷新 token key(适用场景 比如修改了用户的角色/权限去刷新token)
      */
     public static final String JWT_REFRESH_KEY="jwt-refresh-key_";
-
     /**
      * 标记新的access_token
      */
-    public static final String JWT_REFRESH_IDENTIFICATION="jwt-refresj-identification_";
+    public static final String JWT_REFRESH_IDENTIFICATION="jwt-refresh-identification_";
+
+    /**
+     * 部门编码key
+     */
+    public static final String DEPT_CODE_KEY="dept-code-key_";
+
+    /**
+     * 用户权鉴缓存 key
+     */
+    public static final String IDENTIFY_CACHE_KEY="shiro-cache:com.xh.lesson.shiro.CustomRealm.authorizationCache:";
 }

@@ -1,10 +1,14 @@
 package com.gyy.modules.sys.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.gyy.constants.Constant;
 import com.gyy.exception.BusinessException;
+import com.gyy.exception.code.BaseResponseCode;
 import com.gyy.modules.sys.entity.SysUser;
 import com.gyy.modules.sys.form.SysLoginForm;
+import com.gyy.modules.sys.service.CaptchaService;
 import com.gyy.modules.sys.service.SysUserService;
+import com.gyy.modules.sys.vo.LoginRespVO;
 import com.gyy.utils.PasswordUtils;
 import com.gyy.utils.R;
 import com.gyy.utils.RedisUtils;
@@ -17,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,17 +45,23 @@ public class SysLoginController {
     @Autowired
     private RedisUtils redisUtils;
 
+    @Autowired
+    private CaptchaService captchaService;
+
     @PostMapping("/login")
     @ApiOperation(value = "用户登录接口")
-    public R login(@RequestBody SysLoginForm form){
+    public R login(@RequestBody @Valid SysLoginForm form){
         //校验验证码
-        //获取用户，匹配密码
-        SysUser sysUser = sysUserService.queryByUsername(form.getUsername());
-        if (null == sysUser || PasswordUtils.matches(sysUser.getSalt(),form.getPassword(),sysUser.getPassword())){
-            throw new BusinessException(4000002,"用户名或密码错误");
+        boolean validate = captchaService.validate(form.getUuid(), form.getCaptcha());
+        if (!validate){
+            throw new BusinessException(4000003,"验证码错误");
         }
-        String token = UUID.randomUUID().toString();
-        return R.ok(token);
+        //删除验证码
+        redisUtils.delete(form.getUuid());
+        //查询用户并创建token
+        LoginRespVO vo = sysUserService.login(form);
+        //返回vo
+        return R.ok(vo);
     }
 
     @GetMapping("/captcha.jpg")

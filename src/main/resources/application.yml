@@ -63,3 +63,11 @@ spring:
 #swagger开关
 swagger:
   enable: true
+
+#JWT 密钥
+jwt:
+  secretKey: 78944878877848fg)
+  accessTokenExpireTime: PT2H
+  refreshTokenExpireTime: PT8H
+  refreshTokenExpireAppTime: P30D
+  issuer: gyy.com

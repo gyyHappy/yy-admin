@@ -1,13 +1,19 @@
 package com.gyy.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * <p>
@@ -25,6 +31,9 @@ import lombok.experimental.Accessors;
 public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(type = ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty(value = "账户名称")
     private String username;
@@ -69,9 +78,10 @@ public class SysUser implements Serializable {
     private Integer createWhere;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private Date createTime;
 
-    private LocalDateTime updateTime;
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
 
 
 }

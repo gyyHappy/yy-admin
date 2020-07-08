@@ -1,6 +1,9 @@
 package com.gyy.shiro;
 
+import com.gyy.constants.Constant;
+import com.gyy.utils.JwtTokenUtil;
 import com.gyy.utils.RedisUtils;
+import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,41 +29,32 @@ public class CustomRealm extends AuthorizingRealm {
         return token instanceof CustomUsernamePasswordToken;
     }
 
-    @Autowired
-    private RedisUtils redisService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String token= (String) principalCollection.getPrimaryPrincipal();
-        String userId= (String) redisService.get(token);
-        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        info.addRoles(getRoleByUserId(userId));
-        info.addStringPermissions(getPermissionsByUserId(userId));
+        String accessToken = (String) principalCollection.getPrimaryPrincipal();
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Claims claims = JwtTokenUtil.getClaimsFromToken(accessToken);
+        /*
+         * 返回该用户的角色信息给授权期
+         */
+        if (claims.get(Constant.JWT_ROLES_KEY) != null) {
+            info.addRoles((Collection<String>) claims.get(Constant.JWT_ROLES_KEY));
+        }
+
+        /*
+         * 返回该用户的权限信息给授权器
+         */
+        if (claims.get(Constant.JWT_PERMISSIONS_KEY) != null) {
+            info.addStringPermissions((Collection<String>) claims.get(Constant.JWT_PERMISSIONS_KEY));
+        }
+
         return info;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        CustomUsernamePasswordToken token= (CustomUsernamePasswordToken) authenticationToken;
-        SimpleAuthenticationInfo info=new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(),getName());
+        CustomUsernamePasswordToken customUsernamePasswordToken = (CustomUsernamePasswordToken) authenticationToken;
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(customUsernamePasswordToken.getPrincipal(), customUsernamePasswordToken.getCredentials(), CustomRealm.class.getName());
         return info;
-    }
-
-    private List<String> getRoleByUserId(String userId){
-        List<String> roles=new ArrayList<>();
-        if(userId.equals("fcf34b56-a7a2-4719-9236-867495e74c31")){
-            roles.add("admin");
-        }
-        roles.add("test");
-        return roles;
-    }
-
-    private List<String> getPermissionsByUserId(String userId){
-        List<String> permissions=new ArrayList<>();
-        if(userId.equals("fcf34b56-a7a2-4719-9236-867495e74c31")){
-            permissions.add("*");
-        }
-        permissions.add("user:list");
-        permissions.add("user:edit");
-        return permissions;
     }
 }

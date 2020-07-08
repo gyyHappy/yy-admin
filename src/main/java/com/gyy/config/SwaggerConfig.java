@@ -37,7 +37,7 @@ public class SwaggerConfig {
         ParameterBuilder accessTokenBuilder = new ParameterBuilder();
         ParameterBuilder refreshToken = new ParameterBuilder();
 
-        accessTokenBuilder.name("accessToken")
+        accessTokenBuilder.name("authorization")
                 .description("AccessToken入口")
                 .modelRef(new ModelRef("String"))
                 .parameterType("header")

@@ -3,6 +3,7 @@ package com.gyy.config;
 import com.gyy.shiro.CustomAccessControlFilter;
 import com.gyy.shiro.CustomHashedCredentialsMatcher;
 import com.gyy.shiro.CustomRealm;
+import com.gyy.shiro.RedisCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -26,6 +27,11 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
+    public RedisCacheManager cacheManager(){
+        return new RedisCacheManager();
+    }
+
+    @Bean
     public CustomHashedCredentialsMatcher customHashedCredentialsMatcher(){
         return new CustomHashedCredentialsMatcher();
     }
@@ -35,7 +41,7 @@ public class ShiroConfig {
     public CustomRealm customRealm(){
         CustomRealm customRealm = new CustomRealm();
         customRealm.setCredentialsMatcher(customHashedCredentialsMatcher());
-        //customRealm.setCacheManager(cacheManager());
+        customRealm.setCacheManager(cacheManager());
         return customRealm;
     }
 
@@ -66,8 +72,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/layui/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/treetable-lay/**", "anon");
-        filterChainDefinitionMap.put("/api/user/token", "anon");
-        filterChainDefinitionMap.put("/loginTest", "anon");
+        filterChainDefinitionMap.put("/sys/login", "anon");
         //放开swagger-ui地址
         filterChainDefinitionMap.put("/swagger/**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");

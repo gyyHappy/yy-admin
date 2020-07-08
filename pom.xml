@@ -28,6 +28,7 @@
         <swagger.version>2.8.0</swagger.version>
         <hutool.version>5.3.8</hutool.version>
         <jwt.version>0.9.1</jwt.version>
+        <validation.version>2.0.1.Final</validation.version>
     </properties>
 
     <!--  阿里云maven仓库  -->
@@ -64,6 +65,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- 参数校验 -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation.version}</version>
+        </dependency>
+
 
         <!--   lombok   -->
         <dependency>
@@ -168,6 +177,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
         <!-- hutool -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -180,18 +190,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jwt.version}</version>
-        </dependency>
-
-        <!--分页插件-->
-        <dependency>
-            <groupId>com.github.jsqlparser</groupId>
-            <artifactId>jsqlparser</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.5</version>
         </dependency>
 
         <!--  热部署  -->
