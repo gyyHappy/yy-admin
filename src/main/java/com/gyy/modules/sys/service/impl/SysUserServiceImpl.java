@@ -1,11 +1,10 @@
 package com.gyy.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gyy.constants.Constant;
 import com.gyy.exception.BusinessException;
 import com.gyy.exception.code.BaseResponseCode;
-import com.gyy.modules.sys.entity.SysUser;
+import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.mapper.SysUserMapper;
 import com.gyy.modules.sys.service.SysUserService;
@@ -21,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gyy.exception.code.BaseResponseCode.ACCOUNT_ERROR;
-
 /**
  * <p>
  *  服务实现类
@@ -32,7 +29,7 @@ import static com.gyy.exception.code.BaseResponseCode.ACCOUNT_ERROR;
  * @since 2020-07-06
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -40,18 +37,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public LoginRespVO login(SysLoginForm form) {
         //通过用户名查询
-        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        QueryWrapper<SysUserEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("username",form.getUsername());
         wrapper.eq("deleted",1);
-        SysUser sysUser = sysUserMapper.selectOne(wrapper);
+        SysUserEntity sysUserEntity = sysUserMapper.selectOne(wrapper);
         //判断用户信息
-        if (sysUser == null) {
+        if (sysUserEntity == null) {
             throw new BusinessException(BaseResponseCode.ACCOUNT_ERROR);
         }
-        if (sysUser.getStatus() == 2){
+        if (sysUserEntity.getStatus() == 2){
             throw new BusinessException(BaseResponseCode.ACCOUNT_LOCK);
         }
-        if (!PasswordUtils.matches(sysUser.getSalt(),form.getPassword(),sysUser.getPassword())){
+        if (!PasswordUtils.matches(sysUserEntity.getSalt(),form.getPassword(), sysUserEntity.getPassword())){
             throw new BusinessException(BaseResponseCode.ACCOUNT_PASSWORD_ERROR);
         }
 
@@ -61,18 +58,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        respVO.setUsername(sysUser.getUsername());
         //生成Token
         Map<String,Object> claims = new HashMap<>();
-        claims.put(Constant.JWT_ROLES_KEY,getRolesByUserId(sysUser.getId()));
-        claims.put(Constant.JWT_PERMISSIONS_KEY,getPermissionsByUserId(sysUser.getId()));
-        claims.put(Constant.JWT_USER_NAME,sysUser.getUsername());
-        String accessToken= JwtTokenUtil.getAccessToken(sysUser.getId(),claims);
+        claims.put(Constant.JWT_ROLES_KEY,getRolesByUserId(sysUserEntity.getId()));
+        claims.put(Constant.JWT_PERMISSIONS_KEY,getPermissionsByUserId(sysUserEntity.getId()));
+        claims.put(Constant.JWT_USER_NAME, sysUserEntity.getUsername());
+        String accessToken= JwtTokenUtil.getAccessToken(sysUserEntity.getId(),claims);
         Map<String,Object> refreshTokenClaims = new HashMap<>();
-        refreshTokenClaims.put(Constant.JWT_USER_NAME,sysUser.getUsername());
+        refreshTokenClaims.put(Constant.JWT_USER_NAME, sysUserEntity.getUsername());
         String refreshToken;
         //根据类型生成刷新Token
         if(form.getType().equals("1")){
-            refreshToken=JwtTokenUtil.getRefreshToken(sysUser.getId(),refreshTokenClaims);
+            refreshToken=JwtTokenUtil.getRefreshToken(sysUserEntity.getId(),refreshTokenClaims);
         }else {
-            refreshToken= JwtTokenUtil.getRefreshAppToken(sysUser.getId(),refreshTokenClaims);
+            refreshToken= JwtTokenUtil.getRefreshAppToken(sysUserEntity.getId(),refreshTokenClaims);
         }
         respVO.setAccessToken(accessToken);
         respVO.setRefreshToken(refreshToken);
@@ -80,12 +77,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUser queryById(String id) {
-        SysUser sysUser = sysUserMapper.selectById(id);
-        if (sysUser == null){
+    public SysUserEntity queryById(String id) {
+        SysUserEntity sysUserEntity = sysUserMapper.selectById(id);
+        if (sysUserEntity == null){
             throw new BusinessException(BaseResponseCode.ACCOUNT_ERROR);
         }
-        return sysUser;
+        return sysUserEntity;
     }
 
     private List<String> getRolesByUserId(String userId){

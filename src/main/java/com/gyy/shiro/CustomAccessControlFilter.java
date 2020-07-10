@@ -38,7 +38,7 @@ public class CustomAccessControlFilter extends AccessControlFilter {
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         try {
             log.info("接口请求方式{}",request.getMethod());
-            log.info("接口请求地址",request.getRequestURI());
+            log.info("接口请求地址{}",request.getRequestURI());
             String token=request.getHeader(Constant.ACCESS_TOKEN);
             if(StringUtils.isEmpty(token)){
                 throw new BusinessException(4010001,"用户凭证已失效请重新登录认证");

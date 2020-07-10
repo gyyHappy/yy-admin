@@ -20,7 +20,8 @@ import java.util.List;
  */
 @RestControllerAdvice
 @Slf4j
-public class RestExceptionHandler {
+public class
+RestExceptionHandler {
 
     /**
      * Exception 处理

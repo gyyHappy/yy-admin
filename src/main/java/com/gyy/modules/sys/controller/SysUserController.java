@@ -1,7 +1,7 @@
 package com.gyy.modules.sys.controller;
 
 
-import com.gyy.modules.sys.entity.SysUser;
+import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.service.SysUserService;
 import com.gyy.utils.R;
 import io.swagger.annotations.Api;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sys")
 @Api(tags = "用户模块")
-public class SysUserController {
+public class SysUserController extends AbstractController {
 
     @Autowired
     private SysUserService sysUserService;
@@ -34,7 +34,7 @@ public class SysUserController {
     @ApiOperation(value = "获取用户详情接口")
     @RequiresPermissions("sys:user:detail")
     public R queryById(@PathVariable String id){
-        SysUser sysUser = sysUserService.queryById(id);
-        return R.ok(sysUser);
+        SysUserEntity sysUserEntity = sysUserService.queryById(id);
+        return R.ok(sysUserEntity);
     }
 }

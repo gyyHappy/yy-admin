@@ -51,6 +51,7 @@ public class CodeGenerator {
         gc.setXmlName("Sys%sMapper");
         gc.setServiceImplName("Sys%sServiceImpl");
         gc.setServiceName("Sys%sService");
+        gc.setEntityName("Sys%sEntity");
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 

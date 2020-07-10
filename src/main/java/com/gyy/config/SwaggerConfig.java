@@ -48,6 +48,7 @@ public class SwaggerConfig {
                 .parameterType("header")
                 .required(false);
         parameterList.add(accessTokenBuilder.build());
+        parameterList.add(refreshToken.build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())//创建该Api的基本信息（这些基本信息会展现在文档页面中)

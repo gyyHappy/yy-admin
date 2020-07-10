@@ -70,5 +70,15 @@ public class Constant {
     /**
      * 用户权鉴缓存 key
      */
-    public static final String IDENTIFY_CACHE_KEY="shiro-cache:com.xh.lesson.shiro.CustomRealm.authorizationCache:";
+    public static final String IDENTIFY_CACHE_KEY="shiro-cache:com.gyy.shiro.CustomRealm.authorizationCache:";
+
+    /**
+     * 超级管理员
+     */
+    public static final String ADMIN_ACCOUNT = "admin";
+
+    /**
+     * 目录
+     */
+    public static final Integer CATALOG = 1;
 }

@@ -28,7 +28,7 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @Accessors(chain = true)
 @TableName("sys_user")
 @ApiModel(value="User对象", description="")
-public class SysUser implements Serializable {
+public class SysUserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

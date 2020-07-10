@@ -1,15 +1,11 @@
 package com.gyy.modules.sys.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.gyy.constants.Constant;
 import com.gyy.exception.BusinessException;
-import com.gyy.exception.code.BaseResponseCode;
-import com.gyy.modules.sys.entity.SysUser;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.service.CaptchaService;
 import com.gyy.modules.sys.service.SysUserService;
 import com.gyy.modules.sys.vo.LoginRespVO;
-import com.gyy.utils.PasswordUtils;
 import com.gyy.utils.R;
 import com.gyy.utils.RedisUtils;
 import io.swagger.annotations.Api;
@@ -34,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/sys")
 @Api(tags = "登录模块")
-public class SysLoginController {
+public class SysLoginController extends AbstractController{
 
     @Autowired
     private Producer producer;

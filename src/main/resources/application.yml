@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: yy-admin
+  #thymeleaf
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
