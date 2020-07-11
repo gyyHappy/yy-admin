@@ -1,6 +1,7 @@
 package com.gyy.modules.sys.controller;
 
 import com.gyy.modules.sys.entity.SysUserEntity;
+import com.gyy.utils.JwtTokenUtil;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,17 +15,12 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractController {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * 获取用户
-     */
-    protected SysUserEntity getUser() {
-        return (SysUserEntity) SecurityUtils.getSubject().getPrincipal();
-    }
 
     /**
      * 获取用户id
      */
     protected String getUserId() {
-        return getUser().getId();
+        String accessToken = (String) SecurityUtils.getSubject().getPrincipal();
+        return JwtTokenUtil.getUserId(accessToken);
     }
 }

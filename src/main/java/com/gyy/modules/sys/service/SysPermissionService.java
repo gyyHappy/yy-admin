@@ -4,6 +4,7 @@ import com.gyy.modules.sys.entity.SysPermissionEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -19,4 +20,9 @@ public interface SysPermissionService extends IService<SysPermissionEntity> {
      * 获取菜单-权限
      */
     List<SysPermissionEntity> getUserMenuList(String userId);
+
+    /**
+     * 获取用户所有权限
+     */
+    Set<String> getUserPermissions(String userId);
 }

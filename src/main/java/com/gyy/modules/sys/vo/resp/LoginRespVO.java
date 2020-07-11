@@ -1,4 +1,4 @@
-package com.gyy.modules.sys.vo;
+package com.gyy.modules.sys.vo.resp;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

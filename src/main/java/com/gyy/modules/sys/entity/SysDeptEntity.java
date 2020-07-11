@@ -1,5 +1,6 @@
 package com.gyy.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -8,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * <p>
@@ -25,6 +28,10 @@ import lombok.experimental.Accessors;
 public class SysDeptEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "id")
+    @TableId(type = ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty(value = "部门编号")
     private String deptNo;

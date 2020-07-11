@@ -1,5 +1,6 @@
 package com.gyy.modules.sys.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.gyy.constants.Constant;
 import com.gyy.modules.sys.entity.SysPermissionEntity;
 import com.gyy.modules.sys.mapper.SysPermissionMapper;
@@ -9,8 +10,7 @@ import com.gyy.modules.sys.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -86,5 +86,32 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             subMenuList.add(entity);
         }
         return subMenuList;
+    }
+
+    /**
+     * 获取用户所有权限
+     */
+    @Override
+    public Set<String> getUserPermissions(String userId) {
+        List<String> permList;
+        //超级管理员拥有所有权限
+        if (sysRoleService.isAdmin(userId)){
+            List<SysPermissionEntity> menuList = baseMapper.selectList(null);
+            permList = new ArrayList<>(menuList.size());
+            for (SysPermissionEntity entity : menuList) {
+                permList.add(entity.getPerms());
+            }
+        }else {
+            permList = sysPermissionMapper.queryAllPerms(userId);
+        }
+        //用户权限列表
+        Set<String> permSet = new HashSet<>();
+        for (String perm : permList) {
+            if (StrUtil.isBlank(perm)){
+                continue;
+            }
+            permSet.addAll(Arrays.asList(perm.trim().split(",")));
+        }
+        return permSet;
     }
 }

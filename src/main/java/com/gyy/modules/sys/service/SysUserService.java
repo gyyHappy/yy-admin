@@ -3,7 +3,7 @@ package com.gyy.modules.sys.service;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gyy.modules.sys.form.SysLoginForm;
-import com.gyy.modules.sys.vo.LoginRespVO;
+import com.gyy.modules.sys.vo.resp.LoginRespVO;
 
 /**
  * <p>

@@ -24,4 +24,9 @@ public interface SysPermissionMapper extends BaseMapper<SysPermissionEntity> {
      * 通过父id查询菜单
      */
     List<SysPermissionEntity> queryParentId(String parentId);
+
+    /**
+     * 通过id查询所有权限
+     */
+    List<String> queryAllPerms(String userId);
 }

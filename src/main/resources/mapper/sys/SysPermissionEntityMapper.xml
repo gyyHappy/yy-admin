@@ -14,4 +14,14 @@
     <select id="queryParentId" resultType="com.gyy.modules.sys.entity.SysPermissionEntity">
         SELECT * FROM sys_permission WHERE pid = #{parentId}
     </select>
+    <select id="queryAllPerms" resultType="java.lang.String">
+        SELECT
+            sp.perms
+        FROM
+             sys_user_role sur
+        LEFT JOIN sys_role_permission srp on sur.role_id = srp.role_id
+        LEFT JOIN sys_permission sp on srp.permission_id = sp.id
+        WHERE
+            sur.user_id = #{userId}
+    </select>
 </mapper>

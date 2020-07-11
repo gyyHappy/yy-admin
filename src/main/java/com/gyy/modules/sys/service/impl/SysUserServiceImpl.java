@@ -9,7 +9,7 @@ import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.mapper.SysUserMapper;
 import com.gyy.modules.sys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gyy.modules.sys.vo.LoginRespVO;
+import com.gyy.modules.sys.vo.resp.LoginRespVO;
 import com.gyy.utils.JwtTokenUtil;
 import com.gyy.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
