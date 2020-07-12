@@ -7,6 +7,7 @@ import com.gyy.modules.sys.vo.resp.NavRespVO;
 import com.gyy.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +47,21 @@ public class SysPermissionController extends AbstractController{
         navRespVO.setMenuList(menuList);
         navRespVO.setPermissions(permissions);
         return R.ok(navRespVO);
+    }
+
+    /**
+     * 查询所有菜单列表
+     */
+    @GetMapping("/menu/list")
+    @RequiresPermissions("sys:menu:list")
+    public List<SysPermissionEntity> list(){
+        List<SysPermissionEntity> menuList = sysPermissionService.list();
+        for (SysPermissionEntity sysPermissionEntity : menuList) {
+            SysPermissionEntity parentEntity = sysPermissionService.getById(sysPermissionEntity.getPid());
+            if (parentEntity != null){
+                sysPermissionEntity.setParentName(parentEntity.getName());
+            }
+        }
+        return menuList;
     }
 }

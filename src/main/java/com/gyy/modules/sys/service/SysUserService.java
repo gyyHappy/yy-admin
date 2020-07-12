@@ -24,4 +24,5 @@ public interface SysUserService extends IService<SysUserEntity> {
      * 获取用户详情接口
      */
     SysUserEntity queryById(String id);
+
 }

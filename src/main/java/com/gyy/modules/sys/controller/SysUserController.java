@@ -37,4 +37,11 @@ public class SysUserController extends AbstractController {
         SysUserEntity sysUserEntity = sysUserService.queryById(id);
         return R.ok(sysUserEntity);
     }
+
+    @GetMapping("/user/info")
+    @ApiOperation(value = "获取用户信息")
+    public R info(){
+        SysUserEntity sysUserEntity = sysUserService.queryById(getUserId());
+        return R.ok(sysUserEntity);
+    }
 }

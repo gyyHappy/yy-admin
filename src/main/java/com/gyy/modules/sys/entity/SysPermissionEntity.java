@@ -52,8 +52,12 @@ public class SysPermissionEntity implements Serializable {
     @ApiModelProperty(value = "资源请求类型")
     private String method;
 
-    @ApiModelProperty(value = "父级菜单权限名称")
+    @ApiModelProperty(value = "父级菜单id")
     private String pid;
+
+    @ApiModelProperty(value = "父级菜单名称")
+    @TableField(exist=false)
+    private String parentName;
 
     @ApiModelProperty(value = "排序")
     private Integer orderNum;
