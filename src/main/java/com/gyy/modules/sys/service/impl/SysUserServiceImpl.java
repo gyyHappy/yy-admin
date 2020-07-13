@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gyy.constants.Constant;
 import com.gyy.exception.BusinessException;
 import com.gyy.exception.code.BaseResponseCode;
+import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.mapper.SysUserMapper;
+import com.gyy.modules.sys.service.SysMenuService;
+import com.gyy.modules.sys.service.SysRoleService;
 import com.gyy.modules.sys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
@@ -15,10 +18,7 @@ import com.gyy.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -33,6 +33,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Override
     public LoginRespVO login(SysLoginForm form) {
@@ -53,9 +59,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         }
 
         LoginRespVO respVO = new LoginRespVO();
-//        respVO.setId(sysUser.getId());
-//        respVO.setPhone(sysUser.getPhone());
-//        respVO.setUsername(sysUser.getUsername());
         //生成Token
         Map<String,Object> claims = new HashMap<>();
         claims.put(Constant.JWT_ROLES_KEY,getRolesByUserId(sysUserEntity.getId()));
@@ -86,25 +89,25 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     private List<String> getRolesByUserId(String userId){
+        List<SysRoleEntity> rolesList;
 
-        List<String> roles=new ArrayList<>();
-        if("fcf34b56-a7a2-4719-9236-867495e74c31".equals(userId)){
-            roles.add("admin");
+        //判断是否是管理员
+        boolean isAdmin = sysRoleService.isAdmin(userId);
+        if (isAdmin){
+            rolesList = sysRoleService.getRolesById(null);
         }else {
-            roles.add("test");
+            rolesList = sysRoleService.getRolesById(userId);
+        }
+        //遍历查询的角色
+        List<String> roles = new ArrayList<>(rolesList.size());
+        for (SysRoleEntity sysRoleEntity : rolesList) {
+            if (sysRoleEntity.getName() != null){
+                roles.add(sysRoleEntity.getName());
+            }
         }
         return roles;
     }
-    private List<String> getPermissionsByUserId(String userId){
-        List<String> permissions=new ArrayList<>();
-        if("fcf34b56-a7a2-4719-9236-867495e74c31".equals(userId)){
-            permissions.add("sys:user:list");
-            permissions.add("sys:user:add");
-            permissions.add("sys:user:update");
-            permissions.add("sys:user:detail");
-        }else {
-            permissions.add("sys:user:add");
-        }
-        return permissions;
+    private Set<String> getPermissionsByUserId(String userId){
+       return sysMenuService.getUserPermissions(userId);
     }
 }

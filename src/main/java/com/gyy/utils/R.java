@@ -95,4 +95,8 @@ public class R<T> implements Serializable {
     public static <T> R getR(int code, String msg) {
         return new <T>R(code, msg);
     }
+
+    public static <T>R error(String msg) {
+        return new <T>R(5000001,msg);
+    }
 }

@@ -1,6 +1,6 @@
 package com.gyy.modules.sys.mapper;
 
-import com.gyy.modules.sys.entity.SysPermissionEntity;
+import com.gyy.modules.sys.entity.SysMenuEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author GYY
  * @since 2020-07-10
  */
-public interface SysPermissionMapper extends BaseMapper<SysPermissionEntity> {
+public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
 
     /**
      * 获取用户拥有的所有菜单id
@@ -23,7 +23,7 @@ public interface SysPermissionMapper extends BaseMapper<SysPermissionEntity> {
     /**
      * 通过父id查询菜单
      */
-    List<SysPermissionEntity> queryParentId(String parentId);
+    List<SysMenuEntity> queryParentId(String parentId);
 
     /**
      * 通过id查询所有权限

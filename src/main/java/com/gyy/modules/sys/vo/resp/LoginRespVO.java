@@ -18,6 +18,4 @@ public class LoginRespVO {
     @ApiModelProperty(value = "业务token刷新")
     private String refreshToken;
 
-    @ApiModelProperty(value = "用户id")
-    private String userId;
 }

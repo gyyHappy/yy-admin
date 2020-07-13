@@ -3,6 +3,8 @@ package com.gyy.modules.sys.service;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,9 @@ public interface SysRoleService extends IService<SysRoleEntity> {
      * 判断是不是管理员
      */
     boolean isAdmin(String userId);
+
+    /**
+     * 获取用户角色
+     */
+    List<SysRoleEntity> getRolesById(String userId);
 }

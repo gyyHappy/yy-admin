@@ -27,9 +27,9 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_permission")
-@ApiModel(value="SysPermissionEntity对象", description="")
-public class SysPermissionEntity implements Serializable {
+@TableName("sys_menu")
+@ApiModel(value="SysMenuEntity对象", description="")
+public class SysMenuEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,7 @@ public class SysPermissionEntity implements Serializable {
     private String method;
 
     @ApiModelProperty(value = "父级菜单id")
-    private String pid;
+    private String parentId;
 
     @ApiModelProperty(value = "父级菜单名称")
     @TableField(exist=false)
@@ -73,6 +73,9 @@ public class SysPermissionEntity implements Serializable {
 
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
+
+    @ApiModelProperty(value = "菜单图标")
+    private String icon;
 
     /**
      * ztree属性

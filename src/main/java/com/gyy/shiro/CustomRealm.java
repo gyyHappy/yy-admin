@@ -2,7 +2,6 @@ package com.gyy.shiro;
 
 import com.gyy.constants.Constant;
 import com.gyy.utils.JwtTokenUtil;
-import com.gyy.utils.RedisUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

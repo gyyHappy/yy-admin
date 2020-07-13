@@ -34,4 +34,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         }
         return false;
     }
+
+    @Override
+    public List<SysRoleEntity> getRolesById(String userId) {
+        if (userId == null){
+            return baseMapper.selectList(null);
+        }
+        return sysRoleMapper.queryRolesByUserId(userId);
+    }
 }

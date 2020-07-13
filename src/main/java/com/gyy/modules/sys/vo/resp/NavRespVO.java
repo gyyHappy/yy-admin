@@ -1,6 +1,6 @@
 package com.gyy.modules.sys.vo.resp;
 
-import com.gyy.modules.sys.entity.SysPermissionEntity;
+import com.gyy.modules.sys.entity.SysMenuEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class NavRespVO {
     /**
      * 目录
      */
-    private List<SysPermissionEntity> menuList;
+    private List<SysMenuEntity> menuList;
 
     /**
      * 权限
