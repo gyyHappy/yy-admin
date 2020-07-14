@@ -24,4 +24,7 @@
         WHERE
             sur.user_id = #{userId}
     </select>
+    <select id="queryNotButtonList" resultType="com.gyy.modules.sys.entity.SysMenuEntity">
+        SELECT * FROM sys_menu WHERE type != 3 ORDER BY order_num
+    </select>
 </mapper>

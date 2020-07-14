@@ -132,4 +132,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         //删除与菜单与角色的关联
         sysRoleMenuService.deleteByMenuId(id);
     }
+
+    @Override
+    public List<SysMenuEntity> queryNotButtonList() {
+        return baseMapper.queryNotButtonList();
+    }
 }

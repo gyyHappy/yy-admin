@@ -81,4 +81,14 @@ public class Constant {
      * 目录
      */
     public static final Integer CATALOG = 1;
+
+    /**
+     * 菜单
+     */
+    public static final Integer MENU = 2;
+
+    /**
+     * 按钮
+     */
+    public static final Integer BUTTON = 3;
 }

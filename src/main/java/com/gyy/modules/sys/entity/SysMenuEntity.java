@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
@@ -36,9 +38,6 @@ public class SysMenuEntity implements Serializable {
     @ApiModelProperty(value = "id")
     @TableId(type = ASSIGN_UUID)
     private String id;
-
-    @ApiModelProperty(value = "菜单权限编码")
-    private String code;
 
     @ApiModelProperty(value = "菜单权限名称")
     private String name;

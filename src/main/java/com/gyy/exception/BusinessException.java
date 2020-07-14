@@ -30,6 +30,7 @@ public class BusinessException extends RuntimeException {
         this(responseCodeInterface.getCode(),responseCodeInterface.getMsg());
     }
 
+
     public int getCode() {
         return code;
     }

@@ -35,4 +35,9 @@ public interface SysMenuService extends IService<SysMenuEntity> {
      * 删除
      */
     void delete(String id);
+
+    /**
+     * 查询不包含按钮的列表
+     */
+    List<SysMenuEntity> queryNotButtonList();
 }

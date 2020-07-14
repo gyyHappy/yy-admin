@@ -29,4 +29,9 @@ public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
      * 通过id查询所有权限
      */
     List<String> queryAllPerms(String userId);
+
+    /**
+     * 查询不包含列表的按钮
+     */
+    List<SysMenuEntity> queryNotButtonList();
 }
