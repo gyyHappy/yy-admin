@@ -1,7 +1,7 @@
 package com.gyy.modules.sys.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.gyy.constants.Constant;
+import com.gyy.common.constants.Constant;
 import com.gyy.modules.sys.entity.SysMenuEntity;
 import com.gyy.modules.sys.mapper.SysMenuMapper;
 import com.gyy.modules.sys.service.SysMenuService;

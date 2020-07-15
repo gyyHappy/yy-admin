@@ -1,6 +1,6 @@
 package com.gyy.modules.sys.service.impl;
 
-import com.gyy.constants.Constant;
+import com.gyy.common.constants.Constant;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.gyy.modules.sys.mapper.SysRoleMapper;
 import com.gyy.modules.sys.service.SysRoleService;

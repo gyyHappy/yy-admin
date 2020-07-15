@@ -1,9 +1,9 @@
 package com.gyy.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.gyy.constants.Constant;
-import com.gyy.exception.BusinessException;
-import com.gyy.exception.code.BaseResponseCode;
+import com.gyy.common.constants.Constant;
+import com.gyy.common.exception.BusinessException;
+import com.gyy.common.exception.code.BaseResponseCode;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.form.SysLoginForm;
@@ -13,8 +13,8 @@ import com.gyy.modules.sys.service.SysRoleService;
 import com.gyy.modules.sys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
-import com.gyy.utils.JwtTokenUtil;
-import com.gyy.utils.PasswordUtils;
+import com.gyy.common.utils.JwtTokenUtils;
+import com.gyy.common.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,15 +64,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         claims.put(Constant.JWT_ROLES_KEY,getRolesByUserId(sysUserEntity.getId()));
         claims.put(Constant.JWT_PERMISSIONS_KEY,getPermissionsByUserId(sysUserEntity.getId()));
         claims.put(Constant.JWT_USER_NAME, sysUserEntity.getUsername());
-        String accessToken= JwtTokenUtil.getAccessToken(sysUserEntity.getId(),claims);
+        String accessToken= JwtTokenUtils.getAccessToken(sysUserEntity.getId(),claims);
         Map<String,Object> refreshTokenClaims = new HashMap<>();
         refreshTokenClaims.put(Constant.JWT_USER_NAME, sysUserEntity.getUsername());
         String refreshToken;
         //根据类型生成刷新Token
         if(form.getType().equals("1")){
-            refreshToken=JwtTokenUtil.getRefreshToken(sysUserEntity.getId(),refreshTokenClaims);
+            refreshToken= JwtTokenUtils.getRefreshToken(sysUserEntity.getId(),refreshTokenClaims);
         }else {
-            refreshToken= JwtTokenUtil.getRefreshAppToken(sysUserEntity.getId(),refreshTokenClaims);
+            refreshToken= JwtTokenUtils.getRefreshAppToken(sysUserEntity.getId(),refreshTokenClaims);
         }
         respVO.setAccessToken(accessToken);
         respVO.setRefreshToken(refreshToken);

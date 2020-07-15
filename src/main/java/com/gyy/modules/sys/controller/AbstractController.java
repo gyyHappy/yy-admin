@@ -1,7 +1,6 @@
 package com.gyy.modules.sys.controller;
 
-import com.gyy.modules.sys.entity.SysUserEntity;
-import com.gyy.utils.JwtTokenUtil;
+import com.gyy.common.utils.JwtTokenUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,6 @@ public abstract class AbstractController {
      */
     protected String getUserId() {
         String accessToken = (String) SecurityUtils.getSubject().getPrincipal();
-        return JwtTokenUtil.getUserId(accessToken);
+        return JwtTokenUtils.getUserId(accessToken);
     }
 }

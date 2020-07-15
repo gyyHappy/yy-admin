@@ -2,20 +2,21 @@ package com.gyy.modules.sys.controller;
 
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.gyy.constants.Constant;
-import com.gyy.exception.BusinessException;
-import com.gyy.exception.code.BaseResponseCode;
+import com.gyy.common.annotation.SysLog;
+import com.gyy.common.constants.Constant;
+import com.gyy.common.exception.BusinessException;
+import com.gyy.common.exception.code.BaseResponseCode;
+import com.gyy.common.utils.R;
 import com.gyy.modules.sys.entity.SysMenuEntity;
 import com.gyy.modules.sys.service.SysMenuService;
 import com.gyy.modules.sys.vo.resp.NavRespVO;
-import com.gyy.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -70,6 +71,7 @@ public class SysMenuController extends AbstractController {
     /**
      * 删除菜单
      */
+    @SysLog("删除菜单")
     @DeleteMapping("/menu/delete/{id}")
     @RequiresPermissions("sys:menu:delete")
     public R delete(@PathVariable String id) {
@@ -115,11 +117,15 @@ public class SysMenuController extends AbstractController {
     /**
      * 保存
      */
+    @SysLog("保存菜单")
     @PostMapping("/menu/save")
     @RequiresPermissions("sys:menu:save")
     public R save(@RequestBody SysMenuEntity menu) {
         //验证表单数据
         verifyForm(menu);
+
+        menu.setCreateTime(new Date());
+
         //保存
         sysMenuService.save(menu);
 
@@ -129,11 +135,14 @@ public class SysMenuController extends AbstractController {
     /**
      * 修改
      */
+    @SysLog("修改菜单")
     @PostMapping("/menu/update")
     @RequiresPermissions("sys:menu:update")
     public R update(@RequestBody SysMenuEntity menu){
         //数据校验
         verifyForm(menu);
+
+        menu.setUpdateTime(new Date());
 
         sysMenuService.updateById(menu);
 

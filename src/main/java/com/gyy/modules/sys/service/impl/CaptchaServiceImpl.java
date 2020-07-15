@@ -1,7 +1,7 @@
 package com.gyy.modules.sys.service.impl;
 
 import com.gyy.modules.sys.service.CaptchaService;
-import com.gyy.utils.RedisUtils;
+import com.gyy.common.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

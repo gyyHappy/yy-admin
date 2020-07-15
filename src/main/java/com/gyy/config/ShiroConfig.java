@@ -1,9 +1,9 @@
 package com.gyy.config;
 
-import com.gyy.shiro.CustomAccessControlFilter;
-import com.gyy.shiro.CustomHashedCredentialsMatcher;
-import com.gyy.shiro.CustomRealm;
-import com.gyy.shiro.RedisCacheManager;
+import com.gyy.common.shiro.CustomAccessControlFilter;
+import com.gyy.common.shiro.CustomHashedCredentialsMatcher;
+import com.gyy.common.shiro.CustomRealm;
+import com.gyy.common.shiro.RedisCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;

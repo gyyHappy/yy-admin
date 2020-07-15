@@ -3,14 +3,10 @@ server:
 spring:
   application:
     name: yy-admin
-  #thymeleaf
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
-    servlet:
-      content-type: text/html
-    encoding: UTF-8
+    # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 
   #redis配置
   redis:

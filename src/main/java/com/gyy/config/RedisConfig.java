@@ -1,6 +1,6 @@
 package com.gyy.config;
 
-import com.gyy.serializer.MyStringRedisSerializer;
+import com.gyy.common.serializer.MyStringRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

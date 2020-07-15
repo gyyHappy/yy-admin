@@ -1,13 +1,13 @@
 package com.gyy.modules.sys.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.gyy.exception.BusinessException;
+import com.gyy.common.exception.BusinessException;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.service.CaptchaService;
 import com.gyy.modules.sys.service.SysUserService;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
-import com.gyy.utils.R;
-import com.gyy.utils.RedisUtils;
+import com.gyy.common.utils.R;
+import com.gyy.common.utils.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;

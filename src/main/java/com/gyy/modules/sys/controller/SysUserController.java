@@ -1,9 +1,9 @@
 package com.gyy.modules.sys.controller;
 
 
+import com.gyy.common.utils.R;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.service.SysUserService;
-import com.gyy.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
