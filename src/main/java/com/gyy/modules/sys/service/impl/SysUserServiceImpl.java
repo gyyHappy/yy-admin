@@ -1,9 +1,12 @@
 package com.gyy.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gyy.common.constants.Constant;
 import com.gyy.common.exception.BusinessException;
 import com.gyy.common.exception.code.BaseResponseCode;
+import com.gyy.common.utils.PageUtils;
+import com.gyy.common.utils.Query;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.form.SysLoginForm;
@@ -15,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
 import com.gyy.common.utils.JwtTokenUtils;
 import com.gyy.common.utils.PasswordUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +90,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             throw new BusinessException(BaseResponseCode.ACCOUNT_ERROR);
         }
         return sysUserEntity;
+    }
+
+    @Override
+    public PageUtils queryPage(Map<String, Object> params) {
+        String username = (String) params.get("username");
+        String createId = (String) params.get("createId");
+
+        IPage<SysUserEntity> page = this.page(
+          new Query<SysUserEntity>().getPage(params),
+          new QueryWrapper<SysUserEntity>()
+                .like(StringUtils.isNotBlank(username),"username",username)
+                .eq(createId != null,"create_id",createId)
+        );
+        return new PageUtils(page);
     }
 
     private List<String> getRolesByUserId(String userId){

@@ -1,11 +1,13 @@
 package com.gyy.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -74,14 +76,14 @@ public class SysUserEntity implements Serializable {
     @ApiModelProperty(value = "更新人")
     private String updateId;
 
-    @ApiModelProperty(value = "创建来源(1.web 2.android 3.ios )")
-    private Integer createWhere;
-
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
+
+    @TableField(exist=false)
+    private List<Long> roleIdList;
 
 
 }

@@ -1,9 +1,12 @@
 package com.gyy.modules.sys.service;
 
+import com.gyy.common.utils.PageUtils;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -25,4 +28,8 @@ public interface SysUserService extends IService<SysUserEntity> {
      */
     SysUserEntity queryById(String id);
 
+    /**
+     * 分页查询用户列表
+     */
+    PageUtils queryPage(Map<String, Object> params);
 }
