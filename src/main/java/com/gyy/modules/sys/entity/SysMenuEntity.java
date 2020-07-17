@@ -48,9 +48,6 @@ public class SysMenuEntity implements Serializable {
     @ApiModelProperty(value = "访问地址URL")
     private String url;
 
-    @ApiModelProperty(value = "资源请求类型")
-    private String method;
-
     @ApiModelProperty(value = "父级菜单id")
     private String parentId;
 

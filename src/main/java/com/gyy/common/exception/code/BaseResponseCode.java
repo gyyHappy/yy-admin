@@ -27,13 +27,15 @@ BaseResponseCode implements ResponseCodeInterface{
     ACCOUNT_PASSWORD_ERROR(4000004,"用户名密码不匹配"),
     TOKEN_ERROR(4010001,"用户未登录，请重新登录"),
     TOKEN_NOT_NULL(4010001,"token 不能为空"),
+    TOKEN_UPDATE(4010001,"角色权限信息改变,请重新登录"),
     SHIRO_AUTHENTICATION_ERROR(4010001,"用户认证异常"),
-    ACCOUNT_HAS_DELETED_ERROR(4010001,"该账号已被删除，请联系系统管理员"),
-    ACCOUNT_DELETED_ADMIN_ERROR(4010001,"不能删除管理员账号"),
-    ACCOUNT_DELETED_ERROR(4010001,"不能删除当前操作账号"),
-    TOKEN_PAST_DUE(4010002,"token 异常,请刷新token"),
+    ACCOUNT_HAS_DELETED_ERROR(4000001,"该账号已被删除，请联系系统管理员"),
+    ACCOUNT_DELETED_ADMIN_ERROR(4000001,"不能删除管理员账号"),
+    ACCOUNT_DELETED_ERROR(4000001,"不能删除当前操作账号"),
+    TOKEN_PAST_DUE(4010001,"token 异常,请重新登录"),
     NOT_PERMISSION(4030001,"没有权限访问该资源"),
-    ILLEGAL_PARAMETER(5000002,"非法参数")
+    ILLEGAL_PARAMETER(5000002,"非法参数"),
+    ROLE_ERROR(4000005,"新增用户所选角色，不是本人创建")
     ;
 
     int code;

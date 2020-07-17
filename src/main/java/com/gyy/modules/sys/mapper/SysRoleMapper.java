@@ -20,4 +20,8 @@ public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
      */
     List<SysRoleEntity> queryRolesByUserId(String userId);
 
+    /**
+     * 查询用户创建的角色id
+     */
+    List<String> queryRoleIdList(String createId);
 }

@@ -35,6 +35,11 @@ public class Constant {
     public static final String JWT_ACCESS_TOKEN_BLACKLIST="jwt-access-token-blacklist_";
 
     /**
+     * access_token 用户信息修改后标记 key
+     */
+    public static final String JWT_ACCESS_TOKEN_UPDATE="jwt-access-token-update_";
+
+    /**
      * 正常token
      */
     public static final String ACCESS_TOKEN="authorization";

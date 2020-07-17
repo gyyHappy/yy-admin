@@ -43,6 +43,9 @@ public class SysRoleEntity implements Serializable {
     @ApiModelProperty(value = "状态(1:正常0:弃用)")
     private Integer status;
 
+    @ApiModelProperty(value = "创建者id")
+    private String createUserId;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 

@@ -24,4 +24,10 @@ public interface SysRoleService extends IService<SysRoleEntity> {
      * 获取用户角色
      */
     List<SysRoleEntity> getRolesById(String userId);
+
+
+    /**
+     * 查询用户创建的角色ID列表
+     */
+    List<String> queryRoleIdList(String createId);
 }

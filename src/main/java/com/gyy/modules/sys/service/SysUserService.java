@@ -32,4 +32,19 @@ public interface SysUserService extends IService<SysUserEntity> {
      * 分页查询用户列表
      */
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 删除用户
+     */
+    void deleteBatch(String[] userIds);
+
+    /**
+     * 新增用户
+     */
+    void saveUser(SysUserEntity user);
+
+    /**
+     * 修改用户信息
+     */
+    void update(SysUserEntity user, String accessToken);
 }

@@ -48,12 +48,21 @@ public class CustomHashedCredentialsMatcher extends HashedCredentialsMatcher {
         if (redisUtils.hasKey(Constant.JWT_ACCESS_TOKEN_BLACKLIST + accessToken)) {
             throw new BusinessException(BaseResponseCode.TOKEN_ERROR);
         }
+
         /*
          * 判断token是否通过校验
          */
         if (!JwtTokenUtils.validateToken(accessToken)) {
             throw new BusinessException(BaseResponseCode.TOKEN_PAST_DUE);
         }
+
+        /**
+         * 用户权限信息变更
+         */
+        if (redisUtils.hasKey(Constant.JWT_ACCESS_TOKEN_UPDATE + accessToken)){
+            throw new BusinessException(BaseResponseCode.TOKEN_UPDATE);
+        }
+
         /*
          * 判断这个登录用户是否要主动去刷新
          *

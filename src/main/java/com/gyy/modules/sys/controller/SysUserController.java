@@ -2,6 +2,7 @@ package com.gyy.modules.sys.controller;
 
 
 import com.gyy.common.annotation.SysLog;
+import com.gyy.common.constants.Constant;
 import com.gyy.common.exception.BusinessException;
 import com.gyy.common.exception.code.BaseResponseCode;
 import com.gyy.common.utils.PageUtils;
@@ -15,6 +16,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +49,7 @@ public class SysUserController extends AbstractController {
 //    }
 
     @GetMapping("/user/info")
-    @ApiOperation(value = "获取用户信息")
+    @ApiOperation(value = "获取登录用户信息")
     public R info(){
         SysUserEntity sysUserEntity = sysUserService.queryById(getUserId());
         return R.ok(sysUserEntity);
@@ -69,17 +73,70 @@ public class SysUserController extends AbstractController {
     @RequiresPermissions("sys:user:delete")
     @ApiOperation(value = "删除用户")
     public R delete(@RequestBody String[] userIds){
+        //验证删除用户
         verify(userIds);
-        //TODO
+
+        sysUserService.deleteBatch(userIds);
+
+        return R.ok();
     }
 
+    @SysLog("修改用户信息")
+    @PostMapping("/user/update")
+    @RequiresPermissions("sys:user:update")
+    @ApiOperation(value = "修改用户信息")
+    public R update(@RequestBody @Valid SysUserEntity user, HttpServletRequest request){
+        String accessToken = request.getHeader(Constant.ACCESS_TOKEN);
+        //或许这个字段应该叫做当前操作者比较好一些,这里用到createId是因为后面要判断是否越权
+        user.setCreateId(getUserId());
+        sysUserService.update(user,accessToken);
+
+        return R.ok();
+    }
+
+
+    @SysLog("新增用户")
+    @PostMapping("/user/save")
+    @RequiresPermissions("sys:user:save")
+    @ApiOperation(value = "新增用户")
+    public R save(@RequestBody @Valid SysUserEntity user){
+        user.setCreateId(getUserId());
+
+        sysUserService.saveUser(user);
+
+        return R.ok();
+    }
+
+    @GetMapping("/user/info/{id}")
+    @ApiOperation(value = "获取用户详细信息")
+    @RequiresPermissions("sys:user:info")
+    public R info(@PathVariable String id){
+        SysUserEntity user = sysUserService.getById(id);
+
+        //获取用户所属角色列表
+        List<String> roleList = sysRoleService.queryRoleIdList(id);
+        user.setRoleIdList(roleList);
+
+        return R.ok(user);
+    }
+
+
+    /**
+     * 验证删除用户
+     */
     public void verify(String[] userIds){
         for (String userId : userIds) {
             //管理员不能删除
             if (sysRoleService.isAdmin(userId)){
                 throw new BusinessException(BaseResponseCode.ACCOUNT_DELETED_ADMIN_ERROR);
             }
-
+            //不能删除当前操作用户
+            if (userId.equals(getUserId())){
+                throw new BusinessException(BaseResponseCode.ACCOUNT_DELETED_ERROR);
+            }
         }
     }
+
+
+
 }

@@ -15,6 +15,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
@@ -38,26 +40,28 @@ public class SysUserEntity implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "账户名称")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     @ApiModelProperty(value = "加密盐值")
     private String salt;
 
+    @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "用户密码密文")
     private String password;
 
+    @NotBlank(message = "手机号码不能为空")
     @ApiModelProperty(value = "手机号码")
     private String phone;
 
     @ApiModelProperty(value = "部门id")
     private String deptId;
 
+    @NotBlank(message = "真实名称不能为空")
     @ApiModelProperty(value = "真实名称")
     private String realName;
 
-    @ApiModelProperty(value = "昵称")
-    private String nickName;
-
+    @NotBlank(message = "邮箱不能为空")
     @ApiModelProperty(value = "邮箱(唯一)")
     private String email;
 
@@ -67,23 +71,14 @@ public class SysUserEntity implements Serializable {
     @ApiModelProperty(value = "性别(1.男 2.女)")
     private Integer sex;
 
-    @ApiModelProperty(value = "是否删除(1未删除；0已删除)")
-    private Integer deleted;
-
     @ApiModelProperty(value = "创建人")
     private String createId;
-
-    @ApiModelProperty(value = "更新人")
-    private String updateId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
-
     @TableField(exist=false)
-    private List<Long> roleIdList;
+    private List<String> roleIdList;
 
 
 }

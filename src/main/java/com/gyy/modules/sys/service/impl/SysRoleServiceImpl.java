@@ -1,5 +1,6 @@
 package com.gyy.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gyy.common.constants.Constant;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.gyy.modules.sys.mapper.SysRoleMapper;
@@ -42,4 +43,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         }
         return sysRoleMapper.queryRolesByUserId(userId);
     }
+
+    @Override
+    public List<String> queryRoleIdList(String createId) {
+        return sysRoleMapper.queryRoleIdList(createId);
+    }
+
 }
