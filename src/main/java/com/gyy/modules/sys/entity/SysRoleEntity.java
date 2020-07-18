@@ -1,16 +1,20 @@
 package com.gyy.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
 
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
@@ -35,13 +39,13 @@ public class SysRoleEntity implements Serializable {
     @TableId(type = ASSIGN_UUID)
     private String id;
 
+    @NotBlank(message = "角色名称不能为空")
     @ApiModelProperty(value = "角色名称")
     private String name;
 
+    @NotBlank(message = "描述不能为空")
+    @ApiModelProperty(value = "描述")
     private String description;
-
-    @ApiModelProperty(value = "状态(1:正常0:弃用)")
-    private Integer status;
 
     @ApiModelProperty(value = "创建者id")
     private String createUserId;
@@ -51,6 +55,9 @@ public class SysRoleEntity implements Serializable {
 
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
+
+    @TableField(exist=false)
+    private List<String> menuIdList;
 
 
 

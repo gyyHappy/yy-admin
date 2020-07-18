@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.Subject;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -178,6 +177,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         //删除shiro缓存
         redisUtils.delete(Constant.IDENTIFY_CACHE_KEY + user.getId());
 
+    }
+
+    @Override
+    public boolean updatePassword(String password, String newPassword, String userId) {
+        SysUserEntity user = baseMapper.selectById(userId);
+        //原密码错误
+        if (!PasswordUtils.matches(user.getSalt(),password,user.getPassword())){
+            return false;
+        }
+        String encodePassword = PasswordUtils.encode(newPassword, user.getSalt());
+        user.setPassword(encodePassword);
+        return this.update(user,
+                new QueryWrapper<SysUserEntity>().eq("id",userId));
     }
 
     /**

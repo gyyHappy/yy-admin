@@ -35,7 +35,8 @@ BaseResponseCode implements ResponseCodeInterface{
     TOKEN_PAST_DUE(4010001,"token 异常,请重新登录"),
     NOT_PERMISSION(4030001,"没有权限访问该资源"),
     ILLEGAL_PARAMETER(5000002,"非法参数"),
-    ROLE_ERROR(4000005,"新增用户所选角色，不是本人创建")
+    ROLE_ERROR(4000005,"新增用户所选角色，不是本人创建"),
+    MENU_ERROR(4000006,"新增角色的权限，已超出你的权限范围")
     ;
 
     int code;

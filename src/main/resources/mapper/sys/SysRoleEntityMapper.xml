@@ -7,7 +7,6 @@
             sr.id,
             sr.name,
             sr.description,
-            sr.status,
             sr.create_time,
             sr.update_time
         FROM

@@ -1,9 +1,11 @@
 package com.gyy.modules.sys.service;
 
+import com.gyy.common.utils.PageUtils;
 import com.gyy.modules.sys.entity.SysRoleEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,4 +32,15 @@ public interface SysRoleService extends IService<SysRoleEntity> {
      * 查询用户创建的角色ID列表
      */
     List<String> queryRoleIdList(String createId);
+
+    /**
+     * 分页查询角色列表
+     */
+    PageUtils queryPage(Map<String, Object> params);
+
+
+    /**
+     * 保存角色
+     */
+    void saveRole(SysRoleEntity role);
 }

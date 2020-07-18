@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +48,10 @@ public interface SysUserService extends IService<SysUserEntity> {
      * 修改用户信息
      */
     void update(SysUserEntity user, String accessToken);
+
+    /**
+     * 修改密码
+     */
+    boolean updatePassword(String password, String newPassword, String userId);
+
 }

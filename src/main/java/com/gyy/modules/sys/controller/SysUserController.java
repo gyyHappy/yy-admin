@@ -8,6 +8,7 @@ import com.gyy.common.exception.code.BaseResponseCode;
 import com.gyy.common.utils.PageUtils;
 import com.gyy.common.utils.R;
 import com.gyy.modules.sys.entity.SysUserEntity;
+import com.gyy.modules.sys.form.PasswordForm;
 import com.gyy.modules.sys.service.SysRoleService;
 import com.gyy.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -118,6 +119,16 @@ public class SysUserController extends AbstractController {
         user.setRoleIdList(roleList);
 
         return R.ok(user);
+    }
+
+    @PostMapping("/user/password")
+    @ApiOperation(value = "修改密码")
+    public R password(@RequestBody @Valid PasswordForm form){
+        boolean flag = sysUserService.updatePassword(form.getPassword(),form.getNewPassword(),getUserId());
+        if (!flag){
+            return R.error("原密码错误");
+        }
+        return R.ok();
     }
 
 
