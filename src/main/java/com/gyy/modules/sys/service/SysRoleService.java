@@ -29,11 +29,6 @@ public interface SysRoleService extends IService<SysRoleEntity> {
 
 
     /**
-     * 查询用户创建的角色ID列表
-     */
-    List<String> queryRoleIdList(String createId);
-
-    /**
      * 分页查询角色列表
      */
     PageUtils queryPage(Map<String, Object> params);
@@ -43,4 +38,19 @@ public interface SysRoleService extends IService<SysRoleEntity> {
      * 保存角色
      */
     void saveRole(SysRoleEntity role);
+
+    /**
+     * 删除角色
+     */
+    void deleteBatch(String[] roleIds);
+
+    /**
+     * 查询用户创建的角色列表
+     */
+    List<String> queryRoleIdList(String createId);
+
+    /**
+     * 更新角色
+     */
+    void update(SysRoleEntity role);
 }

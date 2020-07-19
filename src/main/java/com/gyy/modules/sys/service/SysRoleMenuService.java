@@ -23,7 +23,8 @@ public interface SysRoleMenuService extends IService<SysRoleMenuEntity> {
     /**
      * 查询角色对应的菜单id
      */
-    List<String> queryMenuIds(String id);
+    List<String>
+    queryMenuIds(String id);
 
     /**
      * 保存角色与菜单关系
@@ -34,4 +35,9 @@ public interface SysRoleMenuService extends IService<SysRoleMenuEntity> {
      * 查询用户拥有的菜单id
      */
     List<String> queryAllMenuId(String userId);
+
+    /**
+     * 删除角色与菜单的关联
+     */
+    int deleteBatch(String[] roleIds);
 }

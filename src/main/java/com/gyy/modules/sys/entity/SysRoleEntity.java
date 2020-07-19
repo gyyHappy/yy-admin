@@ -31,7 +31,9 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @Accessors(chain = true)
 @TableName("sys_role")
 @ApiModel(value="SysRoleEntity对象", description="")
-public class SysRoleEntity implements Serializable {
+public class
+
+SysRoleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

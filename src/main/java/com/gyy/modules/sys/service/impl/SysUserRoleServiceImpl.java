@@ -56,4 +56,19 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             this.save(sysUserRoleEntity);
         }
     }
+
+    @Override
+    public int deleteBatch(String[] roleIds) {
+        return baseMapper.deleteBatch(roleIds);
+    }
+
+    @Override
+    public List<String> getUserId(String[] roleIds) {
+        return baseMapper.getUserId(roleIds);
+    }
+
+    @Override
+    public List<String> queryRoleIdList(String userId) {
+        return baseMapper.queryRoleIdList(userId);
+    }
 }

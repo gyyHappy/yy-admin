@@ -47,11 +47,15 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 修改用户信息
      */
-    void update(SysUserEntity user, String accessToken);
+    void update(SysUserEntity user);
 
     /**
      * 修改密码
      */
     boolean updatePassword(String password, String newPassword, String userId);
 
+    /**
+     * 退出登录
+     */
+    void logout(String userId,String accessToken);
 }

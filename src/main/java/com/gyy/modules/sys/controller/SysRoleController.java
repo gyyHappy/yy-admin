@@ -91,15 +91,25 @@ public class SysRoleController extends AbstractController{
         return R.ok();
     }
 
-//    @SysLog("修改角色")
-//    @PostMapping("/role/update")
-//    @ApiOperation(value = "修改角色")
-//    @RequiresPermissions("sys:role:update")
-//    public R update(@RequestBody @Valid SysRoleEntity role){
-//
-//        role.setCreateUserId(getUserId());
-//        sysRoleService.update(role);
-//
-//        return R.ok();
-//    }
+    @SysLog("修改角色")
+    @PostMapping("/role/update")
+    @ApiOperation(value = "修改角色")
+    @RequiresPermissions("sys:role:update")
+    public R update(@RequestBody @Valid SysRoleEntity role){
+
+        role.setCreateUserId(getUserId());
+        sysRoleService.update(role);
+
+        return R.ok();
+    }
+
+    @SysLog("删除角色")
+    @PostMapping("/role/delete")
+    @RequiresPermissions("sys:role:delete")
+    @ApiOperation(value = "删除角色")
+    public R delete(@RequestBody String[] roleIds){
+        sysRoleService.deleteBatch(roleIds);
+
+        return R.ok();
+    }
 }

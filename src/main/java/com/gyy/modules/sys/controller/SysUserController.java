@@ -10,6 +10,7 @@ import com.gyy.common.utils.R;
 import com.gyy.modules.sys.entity.SysUserEntity;
 import com.gyy.modules.sys.form.PasswordForm;
 import com.gyy.modules.sys.service.SysRoleService;
+import com.gyy.modules.sys.service.SysUserRoleService;
 import com.gyy.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,9 @@ public class SysUserController extends AbstractController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
 //    @GetMapping("/user/{id}")
 //    @ApiOperation(value = "获取用户详情接口")
@@ -86,11 +90,10 @@ public class SysUserController extends AbstractController {
     @PostMapping("/user/update")
     @RequiresPermissions("sys:user:update")
     @ApiOperation(value = "修改用户信息")
-    public R update(@RequestBody @Valid SysUserEntity user, HttpServletRequest request){
-        String accessToken = request.getHeader(Constant.ACCESS_TOKEN);
+    public R update(@RequestBody @Valid SysUserEntity user){
         //或许这个字段应该叫做当前操作者比较好一些,这里用到createId是因为后面要判断是否越权
         user.setCreateId(getUserId());
-        sysUserService.update(user,accessToken);
+        sysUserService.update(user);
 
         return R.ok();
     }
@@ -115,7 +118,7 @@ public class SysUserController extends AbstractController {
         SysUserEntity user = sysUserService.getById(id);
 
         //获取用户所属角色列表
-        List<String> roleList = sysRoleService.queryRoleIdList(id);
+        List<String> roleList = sysUserRoleService.queryRoleIdList(id);
         user.setRoleIdList(roleList);
 
         return R.ok(user);

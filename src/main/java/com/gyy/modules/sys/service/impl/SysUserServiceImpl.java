@@ -17,6 +17,8 @@ import com.gyy.modules.sys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gyy.modules.sys.vo.resp.LoginRespVO;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,10 +155,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     @Transactional
-    public void update(SysUserEntity user,String accessToken) {
-        if(StringUtils.isBlank(user.getPassword())){
+    public void update(SysUserEntity user) {
+        if (StringUtils.isBlank(user.getPassword())) {
             user.setPassword(null);
-        }else {
+        } else {
             //盐值加密
             String salt = PasswordUtils.getSalt();
             String password = PasswordUtils.encode(user.getPassword(), salt);
@@ -171,8 +173,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         //保存用户与角色关系
         sysUserRoleService.saveOrUpdate(user.getId(), user.getRoleIdList());
 
-        //标记用户，使得accessToken不能在访问系统
-        redisUtils.set(Constant.JWT_ACCESS_TOKEN_UPDATE + accessToken,user.getId(),tokenSetting.getAccessTokenExpireTime().toMillis(),TimeUnit.MILLISECONDS);
+        //标记用户，使得下次访问时系统会重新查询角色和菜单
+        redisUtils.set(Constant.JWT_REFRESH_KEY + user.getId(), user.getId(), tokenSetting.getAccessTokenExpireTime().toMillis(), TimeUnit.MILLISECONDS);
 
         //删除shiro缓存
         redisUtils.delete(Constant.IDENTIFY_CACHE_KEY + user.getId());
@@ -183,14 +185,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     public boolean updatePassword(String password, String newPassword, String userId) {
         SysUserEntity user = baseMapper.selectById(userId);
         //原密码错误
-        if (!PasswordUtils.matches(user.getSalt(),password,user.getPassword())){
+        if (!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
             return false;
         }
         String encodePassword = PasswordUtils.encode(newPassword, user.getSalt());
         user.setPassword(encodePassword);
         return this.update(user,
-                new QueryWrapper<SysUserEntity>().eq("id",userId));
+                new QueryWrapper<SysUserEntity>().eq("id", userId));
     }
+
+    @Override
+    public void logout(String userId, String accessToken) {
+        if (StringUtils.isEmpty(accessToken)) {
+            throw new BusinessException(BaseResponseCode.DATA_ERROR);
+        }
+
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout();
+        }
+
+        /*
+         * 把token 加入黑名单 禁止再访问我们的系统资源
+         */
+        redisUtils.set(Constant.JWT_ACCESS_TOKEN_BLACKLIST + accessToken, userId, JwtTokenUtils.getRemainingTime(accessToken), TimeUnit.MILLISECONDS);
+
+    }
+
 
     /**
      * 检查角色是否越权

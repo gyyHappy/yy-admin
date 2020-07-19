@@ -20,6 +20,23 @@ public interface SysUserRoleService extends IService<SysUserRoleEntity> {
      */
     void deleteUserRoles(String[] userIds);
 
-
+    /**
+     * 修改或保存用户与角色的关联
+     */
     void saveOrUpdate(String userId, List<String> roleIdList);
+
+    /**
+     * 删除用户与角色的关联
+     */
+    int deleteBatch(String[] roleIds);
+
+    /**
+     * 获取与角色相关的用户id
+     */
+    List<String> getUserId(String[] roleIds);
+
+    /**
+     * 获取用户所拥有的角色id
+     */
+    List<String> queryRoleIdList(String userId);
 }

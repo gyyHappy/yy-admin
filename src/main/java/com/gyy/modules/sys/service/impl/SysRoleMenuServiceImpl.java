@@ -59,7 +59,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         return baseMapper.queryAllMenuId(userId);
     }
 
-    private int deleteBatch(String[] roleIds) {
+    @Override
+    public int deleteBatch(String[] roleIds) {
         return baseMapper.deleteBatch(roleIds);
     }
 }

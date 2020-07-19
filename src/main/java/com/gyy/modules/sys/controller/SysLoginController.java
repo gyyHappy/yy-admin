@@ -1,6 +1,7 @@
 package com.gyy.modules.sys.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.gyy.common.constants.Constant;
 import com.gyy.common.exception.BusinessException;
 import com.gyy.modules.sys.form.SysLoginForm;
 import com.gyy.modules.sys.service.CaptchaService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
@@ -75,6 +77,15 @@ public class SysLoginController extends AbstractController{
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
         IOUtils.closeQuietly(out);
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "登出")
+    public R logout(HttpServletRequest request){
+        String accessToken = request.getHeader(Constant.ACCESS_TOKEN);
+        sysUserService.logout(getUserId(),accessToken);
+
+        return R.ok();
     }
 
 }

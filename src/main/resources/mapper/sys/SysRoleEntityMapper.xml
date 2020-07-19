@@ -15,10 +15,8 @@
         WHERE
             sur.user_id = #{userId}
     </select>
-    <select id="queryRoleIdList" resultType="java.lang.String">
-        SELECT
-            id
-        FROM sys_role
-        WHERE create_user_id = #{createId}
-    </select>
+    <!-- 查询用户创建的角色ID列表 -->
+    <select id="queryRoleIdList" resultType="long">
+		SELECT role_id FROM sys_role WHERE create_user_id = #{createId}
+	</select>
 </mapper>
