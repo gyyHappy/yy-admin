@@ -4,6 +4,7 @@ package com.gyy.modules.sys.controller;
 import com.gyy.common.utils.PageUtils;
 import com.gyy.common.utils.R;
 import com.gyy.modules.sys.service.SysLogService;
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @since 2020-07-15
  */
 @RestController
+@Api(tags = "日志模块")
 @RequestMapping("/sys")
 public class SysLogController {
 

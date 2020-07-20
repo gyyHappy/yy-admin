@@ -53,8 +53,10 @@ spring:
       # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
       #      filter: stat,wall
       stat-view-servlet:
-        login-username: admin
-        login-password: 666666
+        enabled: true
+        url-pattern: /druid/*
+#        login-username: admin
+#        login-password: 666666
 
 
 #swagger开关

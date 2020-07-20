@@ -63,15 +63,6 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filtersMap);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
-        filterChainDefinitionMap.put("/api/user/login", "anon");
-        filterChainDefinitionMap.put("/hello", "anon");
-        filterChainDefinitionMap.put("/upload/image/**","anon");
-        filterChainDefinitionMap.put("/index/**", "anon");
-        filterChainDefinitionMap.put("/images/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/layui/**", "anon");
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/treetable-lay/**", "anon");
         filterChainDefinitionMap.put("/sys/login", "anon");
         //放开swagger-ui地址
         filterChainDefinitionMap.put("/swagger/**", "anon");
@@ -85,8 +76,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/","anon");
         filterChainDefinitionMap.put("/csrf","anon");
         filterChainDefinitionMap.put("/**","token,authc");
-        //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
-        shiroFilterFactoryBean.setLoginUrl("/api/user/unLogin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
