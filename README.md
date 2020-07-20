@@ -52,5 +52,6 @@ yy-admin
 │  └─static 静态资源
 ```
 # 项目预览
+账号/密码 ： admin/123456
 ![](https://github.com/gyyHappy/yy-admin/blob/master/src/main/resources/images/1.png?raw=true)
 ![](https://github.com/gyyHappy/yy-admin/blob/master/src/main/resources/images/2.png?raw=true)
