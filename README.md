@@ -1,7 +1,8 @@
 # 项目说明
 
 - yy-admin是一个前后端分离的Java后台权限管理系统项目
-- 前端地址： https://github.com/gyyHappy/yy-admin-vue 
+- 前端地址： https://github.com/gyyHappy/yy-admin-vue
+- [开发文档](https://gyyhappy.github.io/2020/07/20/yy-admin-%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3-2020/) 
 
 # 项目源码
 

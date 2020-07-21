@@ -2,6 +2,7 @@ package com.gyy.common.serializer;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
@@ -14,9 +15,6 @@ import java.nio.charset.StandardCharsets;
 
 public class MyStringRedisSerializer implements RedisSerializer<Object> {
     private final Charset charset;
-    public static final org.springframework.data.redis.serializer.StringRedisSerializer US_ASCII;
-    public static final org.springframework.data.redis.serializer.StringRedisSerializer ISO_8859_1;
-    public static final org.springframework.data.redis.serializer.StringRedisSerializer UTF_8;
 
     public MyStringRedisSerializer() {
         this(StandardCharsets.UTF_8);
@@ -28,11 +26,12 @@ public class MyStringRedisSerializer implements RedisSerializer<Object> {
     }
 
 
-
+    @Override
     public String deserialize(@Nullable byte[] bytes) {
         return bytes == null ? null : new String(bytes, this.charset);
     }
 
+    @Override
     public byte[] serialize(@Nullable Object o) {
         if (o == null){
             return new byte[0];
@@ -45,9 +44,4 @@ public class MyStringRedisSerializer implements RedisSerializer<Object> {
         }
     }
 
-    static {
-        US_ASCII = new org.springframework.data.redis.serializer.StringRedisSerializer(StandardCharsets.US_ASCII);
-        ISO_8859_1 = new org.springframework.data.redis.serializer.StringRedisSerializer(StandardCharsets.ISO_8859_1);
-        UTF_8 = new org.springframework.data.redis.serializer.StringRedisSerializer(StandardCharsets.UTF_8);
-    }
 }
